@@ -14,7 +14,8 @@ val detektVersion: String by rootProject
 val kotlinTestVersion: String by rootProject
 val mockkVersion: String by rootProject
 val koinTestVersion: String by rootProject
-
+val kotlinReactiveVersion: String by rootProject
+val kotlinReflectVersion: String by rootProject
 
 plugins {
     jacoco
@@ -59,11 +60,14 @@ allprojects {
 
 subprojects {
     dependencies {
+        // Kotlin
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$kotlinReactiveVersion")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinReflectVersion")
+
         implementation("org.koin:koin-core:$koinVersion")
         implementation("io.ktor:ktor-server-test-host:$ktorServerTestVersion")
 
         //TODO: add version variable
-        implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.0")
 
         testImplementation("org.junit.jupiter:junit-jupiter:$jUnitJupiterVersion")
         testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitJupiterVersion")

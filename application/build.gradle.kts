@@ -5,6 +5,7 @@ val logbackVersion: String by rootProject
 val logbackEncoderVersion: String by rootProject
 val koinVersion: String by rootProject
 val janinoVersion: String by rootProject
+val awsVersion: String by rootProject
 
 application {
     mainClassName = "com.cinema.application.AppKt"
@@ -34,8 +35,14 @@ dependencies {
     implementation("io.ktor:ktor-jackson:$ktorVersion")
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation("ch.qos.logback:logback-core:$logbackVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logbackEncoderVersion")
     implementation("org.codehaus.janino:janino:$janinoVersion")
+
+    // AWS
+    implementation(platform("software.amazon.awssdk:bom:$awsVersion"))
+    implementation("software.amazon.awssdk:dynamodb-enhanced")
+    implementation("software.amazon.awssdk:netty-nio-client:$awsVersion")
 }
 
 tasks {

@@ -17,17 +17,8 @@ object Config {
     }
 
     private fun getStores(): Config {
-        val vaultConfig = ConfigFactory.parseMap(VaultConfig().getSecrets()).resolve()
         return ConfigFactory.parseResources("application.${Environment.getEnvironment()}.conf")
-            .withFallback(vaultConfig)
+            .withFallback(ConfigFactory.parseMap(mapOf<String, Any>()).resolve())
             .resolve()
-    }
-
-    fun getAppName(): String {
-        return System.getenv("DD_SERVICE") ?: "cinema"
-    }
-
-    fun getAppVersion(): String {
-        return System.getenv("DD_VERSION") ?: "LOCAL_VERSION"
     }
 }

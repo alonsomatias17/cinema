@@ -14,7 +14,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 fun Application.exceptions() {
-    val log: Logger = LoggerFactory.getLogger(this::class.java)
+    val log: Logger = LoggerFactory.getLogger("Exceptions")
     val messageKey = "message"
     val codeKey = "code"
 
@@ -22,9 +22,6 @@ fun Application.exceptions() {
         exception<BadRequestException> {
             error(it, HttpStatusCode.BadRequest)
         }
-/*        exception<BaseException> {
-            error(it)
-        }*/
 
         // unhandled errors
         exception<Exception> {
@@ -52,11 +49,3 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.error(
     noticeError(it)
     call.respond(statusCode, it)
 }
-// TODO: uncomment
-/*private suspend fun PipelineContext<Unit, ApplicationCall>.error(
-    it: BaseException,
-    statusCode: HttpStatusCode = HttpStatusCode.InternalServerError,
-) {
-    noticeError(it)
-    call.respond(statusCode, it.getMessageMap())
-}*/
