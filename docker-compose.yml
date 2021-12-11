@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  app:
+    command: run
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: cinema
+    ports:
+      - '5005:5005'
+      - '8080:8080'
+    volumes:
+      - './:/source:rw'
+      - '~/.vault_token:/root/.vault_token'
+      - '~/.gradle/gradle.properties:/source/gradle.properties'
