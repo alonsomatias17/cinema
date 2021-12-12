@@ -19,6 +19,8 @@ val kotlinReflectVersion: String by rootProject
 val logbackVersion: String by rootProject
 val logbackJsonVersion: String by rootProject
 val logbackEncoderVersion: String by rootProject
+val awsVersion: String by rootProject
+
 
 plugins {
     jacoco
@@ -83,6 +85,11 @@ subprojects {
         testImplementation("io.ktor:ktor-server-tests:$ktorServerTestVersion")
         testImplementation("io.ktor:ktor-client-mock:$ktorClientTestVersion")
         testImplementation("io.mockk:mockk:$mockkVersion")
+
+        // AWS
+        implementation(platform("software.amazon.awssdk:bom:$awsVersion"))
+        implementation("software.amazon.awssdk:dynamodb-enhanced")
+        implementation("software.amazon.awssdk:netty-nio-client:$awsVersion")
 
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitJupiterVersion")
         testImplementation("org.koin:koin-test:$koinTestVersion")
