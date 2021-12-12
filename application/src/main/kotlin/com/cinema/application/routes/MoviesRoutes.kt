@@ -7,18 +7,22 @@ import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.post
-import io.ktor.util.toMap
+import io.ktor.util.StringValues
 import org.koin.ktor.ext.inject
 
 fun Routing.moviesRoutes() {
     val movieHandler by inject<MovieHandler>()
 
     get("/v1/cinema/movies/{movieID}/schedules") {
-        call.respond(movieHandler.getSchedules(call.parameters.toMap()))
+        call.respond(movieHandler.getSchedules(call.parameters.map()))
     }
 
     get("/v1/cinema/movies/{movieID}/details") {
-        call.respond(movieHandler.getDetails(call.parameters.toMap()))
+        call.respond(movieHandler.getDetails(call.parameters.map()))
+    }
+
+    get("/v1/cinema/movies/{movieID}") {
+        call.respond(movieHandler.getMovie(call.parameters.map()))
     }
 
     // TODO: check token
@@ -31,3 +35,6 @@ fun Routing.moviesRoutes() {
         call.respond(movieHandler.update(call.receive()))
     }
 }
+
+private fun StringValues.map(): Map<String, String> =
+    this.entries().associateBy({ it.key }, { it.value.joinToString() })
