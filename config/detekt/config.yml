@@ -196,7 +196,6 @@ exceptions:
     active: true
     exceptionNames:
       - Error
-      - Exception
       - Throwable
       - RuntimeException
 

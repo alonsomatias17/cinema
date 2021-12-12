@@ -1,5 +1,7 @@
 val ktorVersion: String by rootProject
 val koinVersion: String by rootProject
+val awsVersion: String by rootProject
+
 
 // TODO: delete
 plugins {
@@ -20,6 +22,11 @@ dependencies {
     implementation("org.koin:koin-core:$koinVersion")
     implementation("org.koin:koin-logger-slf4j:$koinVersion")
     implementation("org.koin:koin-ktor:$koinVersion")
+
+    // AWS
+    implementation(platform("software.amazon.awssdk:bom:$awsVersion"))
+    implementation("software.amazon.awssdk:dynamodb-enhanced")
+    implementation("software.amazon.awssdk:netty-nio-client:$awsVersion")
 
     testImplementation((project(":domain").dependencyProject.sourceSets.getAt("test").output))
 }

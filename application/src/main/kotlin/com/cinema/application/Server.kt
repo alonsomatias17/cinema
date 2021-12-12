@@ -8,7 +8,6 @@ import io.ktor.server.netty.Netty
 
 object Server {
 
-    private const val FACTOR = 4
     private const val WRITE_TO = 1
 
     fun config(): ApplicationEngine {
@@ -16,8 +15,8 @@ object Server {
             Netty,
             configure = {
                 this.connectionGroupSize = this.parallelism
-                this.workerGroupSize = this.parallelism * FACTOR
-                this.callGroupSize = this.parallelism * FACTOR
+                this.workerGroupSize = this.parallelism
+                this.callGroupSize = this.parallelism
                 this.runningLimit = Config.get("ktor.configure.runningLimit")
                 this.requestQueueLimit = Config.get("ktor.configure.requestQueueLimit")
                 this.tcpKeepAlive = false

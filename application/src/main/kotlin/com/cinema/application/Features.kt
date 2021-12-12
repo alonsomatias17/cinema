@@ -1,7 +1,7 @@
 package com.cinema.application
 
-import com.cinema.application.configuration.Environment
 import com.cinema.application.modules.ModuleLoader
+import com.cinema.application.routes.routes
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.CallLogging
@@ -16,23 +16,23 @@ import org.koin.ktor.ext.Koin
 
 fun Application.features() {
     install(DefaultHeaders)
+
     install(Compression) {
         gzip()
         deflate()
     }
+
     install(ContentNegotiation) {
         jackson()
     }
 
-    if (Environment.isDevelopment()) {
-        install(CallLogging)
-    }
+    install(CallLogging)
 
     install(Koin) {
         modules(ModuleLoader.modules)
     }
 
     install(Routing) {
-//        cartBffRoutes()
+        routes()
     }
 }

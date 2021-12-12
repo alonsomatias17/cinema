@@ -1,13 +1,7 @@
 package com.cinema.application.configuration
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
 object Environment {
 
-    private val log: Logger = LoggerFactory.getLogger(this::class.java)
-
-    private const val VAULT_TOKEN_ENV = "VAULT_TOKEN"
     private const val ENV_VARIABLE = "ENV"
     private const val DEVELOPMENT = "dev"
     private const val STAGING = "stg"
@@ -28,10 +22,6 @@ object Environment {
 
     fun isProduction(): Boolean {
         return PRODUCTION.contains(getEnvironment())
-    }
-
-    fun getVaultToken(): String {
-        return getVariable(VAULT_TOKEN_ENV)
     }
 
     fun getEnvironment(): String {
