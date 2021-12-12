@@ -16,13 +16,16 @@ import org.koin.ktor.ext.Koin
 
 fun Application.features() {
     install(DefaultHeaders)
+
     install(Compression) {
         gzip()
         deflate()
     }
+
     install(ContentNegotiation) {
         jackson()
     }
+
     install(CallLogging)
 
     install(Koin) {

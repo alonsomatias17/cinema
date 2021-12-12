@@ -32,6 +32,6 @@ object Server {
 }
 
 fun Application.main() {
-//    features()
-//    exceptions()
+    features()
+    exceptions()
 }

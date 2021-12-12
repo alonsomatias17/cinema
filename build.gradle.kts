@@ -16,6 +16,9 @@ val mockkVersion: String by rootProject
 val koinTestVersion: String by rootProject
 val kotlinReactiveVersion: String by rootProject
 val kotlinReflectVersion: String by rootProject
+val logbackVersion: String by rootProject
+val logbackJsonVersion: String by rootProject
+val logbackEncoderVersion: String by rootProject
 
 plugins {
     jacoco
@@ -63,6 +66,11 @@ subprojects {
         // Kotlin
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$kotlinReactiveVersion")
         implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinReflectVersion")
+
+        api("ch.qos.logback:logback-classic:$logbackVersion")
+        api("ch.qos.logback.contrib:logback-json-classic:$logbackJsonVersion")
+        api("ch.qos.logback.contrib:logback-jackson:$logbackJsonVersion")
+        api("net.logstash.logback:logstash-logback-encoder:$logbackEncoderVersion")
 
         implementation("org.koin:koin-core:$koinVersion")
         implementation("io.ktor:ktor-server-test-host:$ktorServerTestVersion")

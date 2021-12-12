@@ -1,11 +1,15 @@
 package com.cinema.application.modules
 
+import com.cinema.adapters.inbound.handlers.MovieHandler
 import com.cinema.adapters.infraestructure.database.DBClient
 import com.cinema.adapters.infraestructure.database.DBConfig
 import com.cinema.adapters.infraestructure.database.DynamoClientFactory
+import com.cinema.adapters.outbound.repositories.IMovieRepository
+import com.cinema.adapters.outbound.repositories.MovieRepository
 import com.cinema.adapters.outbound.repositories.dto.MovieStorage
 import com.cinema.application.configuration.Config
 import org.koin.core.module.Module
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient
@@ -15,9 +19,9 @@ import java.time.Duration
 object ModuleLoader {
 
     val modules = module(createdAtStart = true) {
-//        injectDatabase()
-//        single { MovieRepository(get()) } bind IMovieRepository::class
-//        single { MovieHandler() }
+        injectDatabase()
+        single { MovieRepository(get()) } bind IMovieRepository::class
+        single { MovieHandler() }
     }
 
     fun Module.injectDatabase() {

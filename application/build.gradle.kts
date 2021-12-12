@@ -34,9 +34,6 @@ dependencies {
     implementation("org.koin:koin-ktor:$koinVersion")
     implementation("io.ktor:ktor-jackson:$ktorVersion")
 
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
-    implementation("ch.qos.logback:logback-core:$logbackVersion")
-    implementation("net.logstash.logback:logstash-logback-encoder:$logbackEncoderVersion")
     implementation("org.codehaus.janino:janino:$janinoVersion")
 
     // AWS
