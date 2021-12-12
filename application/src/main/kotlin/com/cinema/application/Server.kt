@@ -1,5 +1,6 @@
 package com.cinema.application
 
+import com.cinema.application.configuration.Config
 import io.ktor.application.Application
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
@@ -16,12 +17,13 @@ object Server {
                 this.connectionGroupSize = this.parallelism
                 this.workerGroupSize = this.parallelism
                 this.callGroupSize = this.parallelism
-                this.runningLimit = 150
-                this.requestQueueLimit = 300
+                this.runningLimit = Config.get("ktor.configure.runningLimit")
+                this.requestQueueLimit = Config.get("ktor.configure.requestQueueLimit")
                 this.tcpKeepAlive = false
+                this.responseWriteTimeoutSeconds = WRITE_TO
             },
-            port = 8080,
-            watchPaths = emptyList(),
+            port = Config.get("ktor.deployment.port"),
+            watchPaths = Config.get("ktor.watch"),
             module = module()
         )
     }
