@@ -4,4 +4,5 @@ import com.cinema.adapters.outbound.repositories.dto.MovieStorage
 
 interface IMovieRepository {
     suspend fun getMovie(movieID: String): MovieStorage
+    suspend fun updateMovie(movie: MovieStorage)
 }
