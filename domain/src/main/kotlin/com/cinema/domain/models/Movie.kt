@@ -2,7 +2,6 @@ package com.cinema.domain.models
 
 import java.math.BigDecimal
 import java.time.DayOfWeek
-import java.time.LocalTime
 
 data class Movie(
     val id: String,
