@@ -19,8 +19,6 @@ class IMDbClient(
     }
 
     suspend fun getIMDbDetails(imdbID: String): IMDbResponse {
-        // TODO: move to env
-        val params = mapOf(IMDB_KEY to secret, IMDB_ID to imdbID)
-        return this.get(uri = "/", params = params)
+        return this.get(uri = "/", params = mapOf(IMDB_KEY to secret, IMDB_ID to imdbID))
     }
 }
