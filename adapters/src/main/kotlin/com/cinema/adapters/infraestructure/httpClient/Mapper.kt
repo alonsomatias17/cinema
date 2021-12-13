@@ -19,6 +19,7 @@ class Mapper(val mapper: MapperFlavor = defaultCamelConfig()) {
 
     companion object {
         fun defaultCamelCaseMapper() = Mapper(defaultCamelConfig())
+        fun secondaryCamelCaseMapper() = Mapper(secondaryCamelConfig())
     }
 
     fun serialize(obj: Any): String {
@@ -51,6 +52,20 @@ class Mapper(val mapper: MapperFlavor = defaultCamelConfig()) {
 private fun defaultCamelConfig(): MapperFlavor {
     return ObjectMapper()
         .setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE)
+        .configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true)
+        .configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true)
+        .configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false)
+        .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        .registerModule(KotlinModule())
+        .registerModule(JavaTimeModule())
+}
+
+private fun secondaryCamelConfig(): MapperFlavor {
+    return ObjectMapper()
+        .setPropertyNamingStrategy(PropertyNamingStrategies.LOWER_CAMEL_CASE)
         .configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true)
         .configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true)
         .configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false)

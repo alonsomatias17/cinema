@@ -1,0 +1,12 @@
+{
+    "id": "12345",
+    "title": "My Movie Academia",
+    "imdbId": "tt0232500",
+    "ticketPrice": 150.0,
+    "schedules": [
+        {
+            "dayOfWeek": "MONDAY",
+            "times": ["10:30", "14:15"]
+        }
+    ]
+}
