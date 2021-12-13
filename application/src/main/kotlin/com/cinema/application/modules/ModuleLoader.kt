@@ -42,8 +42,8 @@ object ModuleLoader {
     val modules = module(createdAtStart = true) {
         injectDatabase()
         single(named(IMDB_HTTP_CLIENT)) { createClient() }
-        //TODO: host should be in a conf file
-        //TODO: IMDB_KEY_ENV should be in VAULT
+        // TODO: host should be in a conf file
+        // TODO: IMDB_KEY_ENV should be in VAULT
         single {
             IMDbClient(
                 secret = System.getenv(IMDB_KEY_ENV),
@@ -90,7 +90,7 @@ fun getDbConfig(): DBConfig {
     )
 }
 
-//TODO: config values should be in a conf file
+// TODO: config values should be in a conf file
 fun createClient(): Client {
     val cfg = IOReactorConfig.custom()
         .setIoThreadCount(10)
