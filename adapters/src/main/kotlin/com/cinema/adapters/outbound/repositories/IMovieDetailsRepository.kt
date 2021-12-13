@@ -1,3 +1,7 @@
 package com.cinema.adapters.outbound.repositories
 
-interface IMovieDetailsRepository
+import com.cinema.adapters.outbound.repositories.dto.IMDbResponse
+
+interface IMovieDetailsRepository {
+    suspend fun getMovieDetailsByImdbID(imdbID: String): IMDbResponse
+}

@@ -1,7 +1,7 @@
 val ktorVersion: String by rootProject
 val koinVersion: String by rootProject
 val awsVersion: String by rootProject
-
+val jacksonVersion: String by rootProject
 
 // TODO: delete
 plugins {
@@ -10,6 +10,8 @@ plugins {
 
 dependencies {
     implementation(project(":domain"))
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
 
     //ktor
     implementation("io.ktor:ktor-client-core:$ktorVersion")

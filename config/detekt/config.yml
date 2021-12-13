@@ -82,7 +82,7 @@ complexity:
     active: true
     threshold: 6
     ignoreDefaultParameters: false
-    excludes: "**/test/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt,**/*ObjectMother.kt"
+    excludes: "**/test/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt,**/*ObjectMother.kt, **/AbstractClient.kt"
   MethodOverloading:
     active: false
     threshold: 6
@@ -558,7 +558,7 @@ style:
     active: false
   ThrowsCount:
     active: true
-    max: 2
+    max: 3
   TrailingWhitespace:
     active: false
   UnderscoresInNumericLiterals:
