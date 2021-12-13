@@ -11,6 +11,7 @@ class MovieDetailsRepository(private val client: IMDbClient) : IMovieDetailsRepo
 
     private val className = this::class.java.name
 
+    // TODO: this is a very static data it could be saved in a cache
     override suspend fun getMovieDetailsByImdbID(imdbID: String): IMDbResponse {
         log.debug("Getting movie details for imdbID: $imdbID")
         return kotlin.runCatching { client.getIMDbDetails(imdbID) }.also {
