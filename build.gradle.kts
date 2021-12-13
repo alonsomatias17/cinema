@@ -20,6 +20,7 @@ val logbackVersion: String by rootProject
 val logbackJsonVersion: String by rootProject
 val logbackEncoderVersion: String by rootProject
 val awsVersion: String by rootProject
+val ktorVersion: String by rootProject
 
 
 plugins {
@@ -75,6 +76,11 @@ subprojects {
         api("net.logstash.logback:logstash-logback-encoder:$logbackEncoderVersion")
 
         implementation("org.koin:koin-core:$koinVersion")
+        //Ktor
+        implementation("io.ktor:ktor-client-core:$ktorVersion")
+        implementation("io.ktor:ktor-client-apache:$ktorVersion")
+        implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
+        implementation("io.ktor:ktor-server-core:$ktorVersion")
         implementation("io.ktor:ktor-server-test-host:$ktorServerTestVersion")
 
         //TODO: add version variable
