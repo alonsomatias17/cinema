@@ -25,7 +25,7 @@ class IMDbClientTest {
     @BeforeAll
     fun setup() {
         engine = MockEngine(config = MockEngineConfig().apply { addHandler { error("Unhandled error") } })
-        imdbClient = IMDbClient("localhost", HttpClient(engine) { expectSuccess = false })
+        imdbClient = IMDbClient(host = "localhost", client = HttpClient(engine) { expectSuccess = false })
     }
 
     @BeforeEach

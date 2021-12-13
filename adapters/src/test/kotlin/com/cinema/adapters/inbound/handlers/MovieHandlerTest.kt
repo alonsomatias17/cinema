@@ -4,6 +4,7 @@ import com.cinema.adapters.inbound.handlers.MovieHandler.Companion.MOVIE_ID
 import com.cinema.domain.models.Movie
 import com.cinema.domain.models.Schedule
 import com.cinema.domain.ports.inbound.IGetMovieByIDPort
+import com.cinema.domain.ports.inbound.IGetMovieDetailsByIDPort
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -15,7 +16,8 @@ import java.time.DayOfWeek
 class MovieHandlerTest {
 
     private val getMovieByID: IGetMovieByIDPort = mockk()
-    private val movieHandler = MovieHandler(getMovieByID)
+    private val getMovieDetailsByID: IGetMovieDetailsByIDPort = mockk()
+    private val movieHandler = MovieHandler(getMovieByID, getMovieDetailsByID)
 
     private val schedules = listOf(Schedule(dayOfWeek = DayOfWeek.MONDAY, times = listOf("10:30")))
     private val movie = Movie(

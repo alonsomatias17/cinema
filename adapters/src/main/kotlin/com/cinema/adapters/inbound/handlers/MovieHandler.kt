@@ -2,10 +2,15 @@ package com.cinema.adapters.inbound.handlers
 
 import com.cinema.adapters.util.handleFailure
 import com.cinema.domain.models.Movie
+import com.cinema.domain.models.MovieDetails
 import com.cinema.domain.models.Schedule
 import com.cinema.domain.ports.inbound.IGetMovieByIDPort
+import com.cinema.domain.ports.inbound.IGetMovieDetailsByIDPort
 
-class MovieHandler(private val getMovieByID: IGetMovieByIDPort) {
+class MovieHandler(
+    private val getMovieByID: IGetMovieByIDPort,
+    private val getMovieDetailsByID: IGetMovieDetailsByIDPort
+) {
 
     companion object {
         const val MOVIE_ID = "movieID"
@@ -29,8 +34,12 @@ class MovieHandler(private val getMovieByID: IGetMovieByIDPort) {
         }.getOrNull()!!
     }
 
-    fun getDetails(params: Map<String, String>): Any {
-        TODO("Not yet implemented")
+    suspend fun getDetails(params: Map<String, String>): MovieDetails {
+        return kotlin.runCatching { getMovieDetailsByID(params[MOVIE_ID]!!) }.also {
+            it.handleFailure("Error getting movie details by movie ID", className) { message: String ->
+                throw Exception(message)
+            }
+        }.getOrNull()!!
     }
 
     fun rate(body: Map<String, Any>): Any {
