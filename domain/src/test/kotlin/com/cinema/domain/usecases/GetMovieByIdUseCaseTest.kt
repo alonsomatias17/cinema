@@ -44,7 +44,6 @@ class GetMovieByIdUseCaseTest {
         val exception = Assertions.assertThrows(MovieFetchingException::class.java) {
             runBlocking { useCase(movie.id) }
         }
-
         Assertions.assertEquals(errorMessage, exception.message)
     }
 }

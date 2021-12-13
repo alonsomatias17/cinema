@@ -16,10 +16,13 @@ import com.cinema.adapters.outbound.repositories.dto.MovieStorage
 import com.cinema.application.configuration.Config
 import com.cinema.domain.ports.inbound.IGetMovieByIDPort
 import com.cinema.domain.ports.inbound.IGetMovieDetailsByIDPort
+import com.cinema.domain.ports.inbound.IUpdateMoviePort as IUpdateMovieInboundPort
 import com.cinema.domain.ports.outbound.IGetMovieDetailsPort
 import com.cinema.domain.ports.outbound.IGetMoviePort
+import com.cinema.domain.ports.outbound.IUpdateMoviePort as IUpdateMovieOutboundPort
 import com.cinema.domain.usecases.GetMovieByIdUseCase
 import com.cinema.domain.usecases.GetMovieDetailsByIDUseCase
+import com.cinema.domain.usecases.UpdateMovieUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.apache.Apache
 import org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager
@@ -28,6 +31,7 @@ import org.apache.http.impl.nio.reactor.IOReactorConfig
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
+import org.koin.dsl.binds
 import org.koin.dsl.module
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient
@@ -56,9 +60,12 @@ object ModuleLoader {
         single { GetMovieDetailsByIDUseCase(get()) } bind IGetMovieDetailsByIDPort::class
 
         single { MovieRepository(get()) } bind IMovieRepository::class
-        single { MovieGateway(get()) } bind IGetMoviePort::class
+        single { MovieGateway(get()) } binds arrayOf(IGetMoviePort::class, IUpdateMovieOutboundPort::class)
         single { GetMovieByIdUseCase(get()) } bind IGetMovieByIDPort::class
-        single { MovieHandler(get(), get()) }
+
+        single { UpdateMovieUseCase(get()) } bind IUpdateMovieInboundPort::class
+
+        single { MovieHandler(get(), get(), get()) }
     }
 
     fun Module.injectDatabase() {

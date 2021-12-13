@@ -1,15 +1,20 @@
 package com.cinema.adapters.inbound.handlers
 
+import com.cinema.adapters.infraestructure.httpClient.Mapper
 import com.cinema.adapters.util.handleFailure
 import com.cinema.domain.models.Movie
 import com.cinema.domain.models.MovieDetails
 import com.cinema.domain.models.Schedule
 import com.cinema.domain.ports.inbound.IGetMovieByIDPort
 import com.cinema.domain.ports.inbound.IGetMovieDetailsByIDPort
+import com.cinema.domain.ports.inbound.IUpdateMoviePort
+import io.ktor.features.BadRequestException
 
 class MovieHandler(
     private val getMovieByID: IGetMovieByIDPort,
-    private val getMovieDetailsByID: IGetMovieDetailsByIDPort
+    private val getMovieDetailsByID: IGetMovieDetailsByIDPort,
+    private val updateMovie: IUpdateMoviePort,
+    private val mapper: Mapper = Mapper.secondaryCamelCaseMapper()
 ) {
 
     companion object {
@@ -46,7 +51,17 @@ class MovieHandler(
         TODO("Not yet implemented")
     }
 
-    fun update(body: Map<String, Any>): Any {
-        TODO("Not yet implemented")
+    suspend fun updateMovie(body: String) {
+        val movie = kotlin.runCatching { mapper.deserialize<Movie>(body) }.also {
+            it.handleFailure("Error invalid movie body", className) { message: String ->
+                throw BadRequestException(message)
+            }
+        }.getOrNull()!!
+
+        kotlin.runCatching { updateMovie(movie) }.also {
+            it.handleFailure("Error updating movie ${movie.id}", className) { message: String ->
+                throw Exception(message)
+            }
+        }
     }
 }

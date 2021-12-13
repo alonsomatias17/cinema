@@ -31,8 +31,8 @@ fun Routing.moviesRoutes() {
     }
 
     // TODO: check token
-    post("/v1/cinema/movies/{movieID}") {
-        call.respond(movieHandler.update(call.receive()))
+    post("/v1/cinema/movies") {
+        call.respond(movieHandler.updateMovie(call.receive()))
     }
 }
 
