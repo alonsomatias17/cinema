@@ -23,6 +23,7 @@ data class MovieStorage(
 ) {
     companion object {
         private const val TABLE_NAME = "Movies"
+        private const val ENTITY = "Movie"
         private const val KEY_PREFIX = "mo#"
         private const val SORT_KEY_PREFIX = "mo#"
 
@@ -31,6 +32,7 @@ data class MovieStorage(
         fun toUnKey(key: String) = key.replace(KEY_PREFIX, "")
         fun toUnSortKey(sortKey: String) = sortKey.replace(SORT_KEY_PREFIX, "")
         fun tableName() = TABLE_NAME
+        fun entityName() = ENTITY
     }
 }
 

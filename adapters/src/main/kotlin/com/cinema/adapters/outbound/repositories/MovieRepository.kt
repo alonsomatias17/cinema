@@ -18,7 +18,7 @@ class MovieRepository(private val dbClient: DBClient) : IMovieRepository {
         log.debug("Getting movie schedule for movieID: $movieID")
         return kotlin.runCatching {
             dbClient.getAsync<MovieStorage>(
-                MovieStorage.tableName(),
+                MovieStorage.entityName(),
                 QueryBuilder().buildWithKey(MovieStorage.toKey(movieID), MovieStorage.toSortKey(movieID))
             ).await().unBuildKey()
         }.also {
@@ -30,7 +30,7 @@ class MovieRepository(private val dbClient: DBClient) : IMovieRepository {
 
     override suspend fun updateMovie(movie: MovieStorage) {
         log.debug("Updating movie ${movie.id}")
-        kotlin.runCatching { dbClient.updateAsync(MovieStorage.tableName(), movie.buildKey()).await() }.also {
+        kotlin.runCatching { dbClient.updateAsync(MovieStorage.entityName(), movie.buildKey()).await() }.also {
             it.handleFailure("Error updating movie ${movie.id}", className) { message: String ->
                 throw Exception(message)
             }

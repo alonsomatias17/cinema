@@ -4,9 +4,11 @@ import com.cinema.adapters.infraestructure.httpClient.Mapper
 import com.cinema.adapters.util.handleFailure
 import com.cinema.domain.models.Movie
 import com.cinema.domain.models.MovieDetails
+import com.cinema.domain.models.RatingScore
 import com.cinema.domain.models.Schedule
 import com.cinema.domain.ports.inbound.IGetMovieByIDPort
 import com.cinema.domain.ports.inbound.IGetMovieDetailsByIDPort
+import com.cinema.domain.ports.inbound.IRateMoviePort
 import com.cinema.domain.ports.inbound.IUpdateMoviePort
 import io.ktor.features.BadRequestException
 
@@ -14,6 +16,7 @@ class MovieHandler(
     private val getMovieByID: IGetMovieByIDPort,
     private val getMovieDetailsByID: IGetMovieDetailsByIDPort,
     private val updateMovie: IUpdateMoviePort,
+    private val rateMovie: IRateMoviePort,
     private val mapper: Mapper = Mapper.secondaryCamelCaseMapper()
 ) {
 
@@ -47,8 +50,19 @@ class MovieHandler(
         }.getOrNull()!!
     }
 
-    fun rate(body: Map<String, Any>): Any {
-        TODO("Not yet implemented")
+    suspend fun rateMovie(body: String, params: Map<String, String>) {
+        val ratingScore = kotlin.runCatching { mapper.deserialize<RatingScore>(body) }.also {
+            it.handleFailure("Error invalid rating body", className) { message: String ->
+                throw BadRequestException(message)
+            }
+        }.getOrNull()!!
+
+        kotlin.runCatching { rateMovie(params[MOVIE_ID]!!, RatingScore(ratingScore.userName, ratingScore.score)) }
+            .also {
+                it.handleFailure("Error rating movie ${params[MOVIE_ID]}", className) { message: String ->
+                    throw Exception(message)
+                }
+            }
     }
 
     suspend fun updateMovie(body: String) {
