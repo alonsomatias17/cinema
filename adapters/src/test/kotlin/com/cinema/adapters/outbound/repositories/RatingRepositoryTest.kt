@@ -7,7 +7,11 @@ import com.cinema.adapters.outbound.repositories.dto.RatingStorage
 import com.cinema.adapters.outbound.repositories.dto.ScoreStorage
 import com.cinema.adapters.outbound.repositories.dto.buildKey
 import com.cinema.domain.models.RatingScore
-import io.mockk.*
+import io.mockk.clearAllMocks
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.coVerifyOrder
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -18,7 +22,7 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
-//TODO: Test error branches
+// TODO: Test error branches
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RatingRepositoryTest {
 
