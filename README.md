@@ -20,21 +20,23 @@ And the last one <strong>Domain</strong> can't "see" any other module but itself
 
 ### Dependencies
 
-
+- Docker for storage (dynamodb) usage
+- [OMDb API access](http://www.omdbapi.com/)
+  
 ### Running the project
 
 Before running the project please ensure that all the dependencies are installed in your system. Then follow the next:
 
-1. Run the project
+1. First run, to star-up the storage (docker is needed)
 
     ```
-    docker-compose up app
+    docker-compose up
     ```
 
-2. Alternative you can run the app locally
+2. Then you can run the app locally (you need to provide valid OMDb key)
 
     ```
-    ./gradlew run
+    imdbKey={yourKey} gradle run
     ```
 
 ### Running quality checks
@@ -50,5 +52,12 @@ This project includes a static code analysis tool for the Kotlin programming lan
 In order to run the project tests you need to execute the following command:
 
 ```
-./gradlew test
+gradle test
 ```
+
+##Documentation
+
+The application must be running to use this doc
+
+* [SwaggerUI](http://localhost:8080/swagger-ui/index.html?url=/docs/openapi.json#/)
+* [ReDoc](http://localhost:8080/docs/redoc)

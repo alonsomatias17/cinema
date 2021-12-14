@@ -21,7 +21,7 @@ val logbackJsonVersion: String by rootProject
 val logbackEncoderVersion: String by rootProject
 val awsVersion: String by rootProject
 val ktorVersion: String by rootProject
-
+val ktorOpenAPIVersion: String by rootProject
 
 plugins {
     jacoco
@@ -53,6 +53,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
         maven { url = uri("https://jcenter.bintray.com/") }
+        maven { url = uri("https://jitpack.io") }
     }
     detekt {
         toolVersion = detektVersion
@@ -96,6 +97,9 @@ subprojects {
         implementation(platform("software.amazon.awssdk:bom:$awsVersion"))
         implementation("software.amazon.awssdk:dynamodb-enhanced")
         implementation("software.amazon.awssdk:netty-nio-client:$awsVersion")
+
+        //DOC
+        implementation("com.github.papsign:Ktor-OpenAPI-Generator:$ktorOpenAPIVersion")
 
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitJupiterVersion")
         testImplementation("org.koin:koin-test:$koinTestVersion")
