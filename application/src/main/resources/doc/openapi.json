@@ -1,0 +1,404 @@
+{
+    "components": {
+        "schemas": {
+            "SchedulesResponse": {
+                "nullable": false,
+                "properties": {
+                    "dayOfWeek": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "times": {
+                        "nullable": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "MovieResponse": {
+                "nullable": false,
+                "properties": {
+                    "id": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "title": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "imdbId": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "ticketPrice": {
+                        "nullable": false,
+                        "type": "number"
+                    },
+                    "ratings": {
+                        "nullable": false,
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "dayOfWeek": {
+                                    "nullable": false,
+                                    "type": "string"
+                                },
+                                "times": {
+                                    "nullable": false,
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "MovieDetailsResponse": {
+                "nullable": false,
+                "properties": {
+                    "title": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "year": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "rated": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "released": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "runtime": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "genre": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "director": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "writer": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "actors": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "plot": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "language": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "country": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "awards": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "poster": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "ratings": {
+                        "nullable": false,
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "source": {
+                                    "nullable": false,
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "nullable": false,
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "metascore": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "imdbRating": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "imdbVotes": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "imdbID": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "type": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "boxOffice": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "production": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "website": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "response": {
+                        "nullable": false,
+                        "type": "string"
+                    },
+                    "dvd": {
+                        "nullable": false,
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "security": [
+    ],
+    "info": {
+        "description": "This is a service for cinema manage",
+        "title": "Cinema Service",
+        "version": "0.0.1",
+        "x-logo": {
+            "url": "/docs/static",
+            "altText": "Cinema"
+        }
+    },
+    "openapi": "3.0.0",
+    "paths": {
+        "/v1/cinema/movies": {
+            "post": {
+                "description": "Updates movie data (e.g. ticket price; schedules)",
+                "tags": ["Cinema"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "nullable": false,
+                                        "required": true,
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "nullable": false,
+                                        "required": true,
+                                        "type": "string"
+                                    },
+                                    "imdbId": {
+                                        "nullable": false,
+                                        "required": true,
+                                        "type": "string"
+                                    },
+                                    "ticketPrice": {
+                                        "nullable": false,
+                                        "required": true,
+                                        "type": "number"
+                                    },
+                                    "schedules": {
+                                        "nullable": false,
+                                        "required": true,
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "dayOfWeek": {
+                                                    "nullable": false,
+                                                    "type": "string"
+                                                },
+                                                "times": {
+                                                    "nullable": false,
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/cinema/movies/{movieID}": {
+            "get": {
+                "description": "Returns a movie for a given movieID",
+                "tags": ["Cinema"],
+                "parameters": [
+                    {
+                        "deprecated": false,
+                        "description": "The movie id",
+                        "explode": false,
+                        "in": "path",
+                        "name": "movieID",
+                        "required": true,
+                        "schema": {
+                            "nullable": false,
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MovieResponse"
+                                }
+                            }
+                        },
+                        "description": "Movie model"
+                    }
+                }
+            }
+        },
+        "/v1/cinema/movies/{movieID}/schedules": {
+            "get": {
+                "description": "Returns a list of schedules for a given movieID",
+                "tags": ["Cinema"],
+                "parameters": [
+                    {
+                        "deprecated": false,
+                        "description": "The movie id",
+                        "explode": false,
+                        "in": "path",
+                        "name": "movieID",
+                        "required": true,
+                        "schema": {
+                            "nullable": false,
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SchedulesResponse"
+                                }
+                            }
+                        },
+                        "description": "Movie schedules model"
+                    }
+                }
+            }
+        },
+        "/v1/cinema/movies/{movieID}/details": {
+            "get": {
+                "description": "Returns the movie details for a given movieID",
+                "tags": ["Cinema"],
+                "parameters": [
+                    {
+                        "deprecated": false,
+                        "description": "The movie id",
+                        "explode": false,
+                        "in": "path",
+                        "name": "movieID",
+                        "required": true,
+                        "schema": {
+                            "nullable": false,
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MovieDetailsResponse"
+                                }
+                            }
+                        },
+                        "description": "Movie details model"
+                    }
+                }
+            }
+        },
+        "/v1/cinema/movies/{movieID}/rate": {
+            "post": {
+                "description": "Adds a rating to a movie",
+                "tags": ["Cinema"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userName": {
+                                        "nullable": false,
+                                        "required": true,
+                                        "type": "string"
+                                    },
+                                    "score": {
+                                        "nullable": false,
+                                        "required": true,
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "description": "Local",
+            "url": "http://localhost:8080/"
+        }
+    ],
+    "tags": [
+        {
+            "description": "Cinema operations",
+            "name": "Cinema"
+        }
+    ]
+}

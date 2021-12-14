@@ -2,6 +2,7 @@ package com.cinema.application
 
 import com.cinema.application.modules.ModuleLoader
 import com.cinema.application.routes.routes
+import com.papsign.ktor.openapigen.OpenAPIGen
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.CallLogging
@@ -25,6 +26,8 @@ fun Application.features() {
     install(ContentNegotiation) {
         jackson()
     }
+
+    install(OpenAPIGen)
 
     install(CallLogging)
 

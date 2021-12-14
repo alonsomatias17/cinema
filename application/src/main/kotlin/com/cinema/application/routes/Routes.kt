@@ -4,5 +4,6 @@ import io.ktor.routing.Routing
 
 fun Routing.routes() {
     healthCheckRoute()
+    docRoute()
     moviesRoutes()
 }
