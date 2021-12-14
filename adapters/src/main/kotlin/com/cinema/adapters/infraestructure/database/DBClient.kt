@@ -12,7 +12,9 @@ class DBClient(
     val tablesMap: Map<String, DynamoDbAsyncTable<*>>,
 ) {
 
-    inline fun <reified T> getTableByName(table: String) = tablesMap[table] as DynamoDbAsyncTable<T>
+    inline fun <reified T> getTableByName(table: String): DynamoDbAsyncTable<T> {
+      return tablesMap[table] as DynamoDbAsyncTable<T>
+    }
 
     suspend inline fun <reified T> saveAsync(table: String, requestToSave: T): Deferred<Void> {
         return withContext(Dispatchers.IO) {

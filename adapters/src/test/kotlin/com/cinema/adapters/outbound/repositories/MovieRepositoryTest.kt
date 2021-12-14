@@ -23,7 +23,7 @@ class MovieRepositoryTest {
 
     private val dynamoClientMock: DynamoDbEnhancedAsyncClient = mockk()
     private val tableMock: DynamoDbAsyncTable<MovieStorage> = mockk()
-    private val dbClientMock = DBClient(dynamoClientMock, mapOf(MovieStorage.tableName() to tableMock))
+    private val dbClientMock = DBClient(dynamoClientMock, mapOf(MovieStorage.entityName() to tableMock))
     private val repository = MovieRepository(dbClientMock)
 
     @BeforeEach

@@ -27,7 +27,7 @@ fun Routing.moviesRoutes() {
 
     // TODO: check token
     post("/v1/cinema/movies/{movieID}/rate") {
-        call.respond(movieHandler.rate(call.receive()))
+        call.respond(movieHandler.rateMovie(call.receive(), call.parameters.map()))
     }
 
     // TODO: check token

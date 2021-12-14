@@ -6,6 +6,7 @@ import com.cinema.domain.models.Movie
 import com.cinema.domain.models.Schedule
 import com.cinema.domain.ports.inbound.IGetMovieByIDPort
 import com.cinema.domain.ports.inbound.IGetMovieDetailsByIDPort
+import com.cinema.domain.ports.inbound.IRateMoviePort
 import com.cinema.domain.ports.inbound.IUpdateMoviePort
 import io.ktor.features.BadRequestException
 import io.mockk.Runs
@@ -23,7 +24,8 @@ class MovieHandlerTest {
     private val getMovieByID: IGetMovieByIDPort = mockk()
     private val getMovieDetailsByID: IGetMovieDetailsByIDPort = mockk()
     private val updateMovie: IUpdateMoviePort = mockk()
-    private val movieHandler = MovieHandler(getMovieByID, getMovieDetailsByID, updateMovie)
+    private val rateMovie: IRateMoviePort = mockk()
+    private val movieHandler = MovieHandler(getMovieByID, getMovieDetailsByID, updateMovie, rateMovie)
 
     private val schedules = listOf(Schedule(dayOfWeek = DayOfWeek.MONDAY, times = listOf("10:30")))
     private val movie = Movie(

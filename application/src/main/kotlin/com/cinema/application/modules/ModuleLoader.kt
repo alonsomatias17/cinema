@@ -8,20 +8,25 @@ import com.cinema.adapters.infraestructure.httpClient.Client
 import com.cinema.adapters.outbound.clients.IMDbClient
 import com.cinema.adapters.outbound.gateways.MovieDetailsGateway
 import com.cinema.adapters.outbound.gateways.MovieGateway
+import com.cinema.adapters.outbound.gateways.MovieRatingGateway
 import com.cinema.adapters.outbound.repositories.IMovieDetailsRepository
 import com.cinema.adapters.outbound.repositories.IMovieRepository
+import com.cinema.adapters.outbound.repositories.IRatingRepository
 import com.cinema.adapters.outbound.repositories.MovieDetailsRepository
 import com.cinema.adapters.outbound.repositories.MovieRepository
+import com.cinema.adapters.outbound.repositories.RatingRepository
 import com.cinema.adapters.outbound.repositories.dto.MovieStorage
+import com.cinema.adapters.outbound.repositories.dto.RatingStorage
 import com.cinema.application.configuration.Config
 import com.cinema.domain.ports.inbound.IGetMovieByIDPort
 import com.cinema.domain.ports.inbound.IGetMovieDetailsByIDPort
-import com.cinema.domain.ports.inbound.IUpdateMoviePort as IUpdateMovieInboundPort
+import com.cinema.domain.ports.inbound.IRateMoviePort
+import com.cinema.domain.ports.outbound.IAddMovieRatingPort
 import com.cinema.domain.ports.outbound.IGetMovieDetailsPort
 import com.cinema.domain.ports.outbound.IGetMoviePort
-import com.cinema.domain.ports.outbound.IUpdateMoviePort as IUpdateMovieOutboundPort
 import com.cinema.domain.usecases.GetMovieByIdUseCase
 import com.cinema.domain.usecases.GetMovieDetailsByIDUseCase
+import com.cinema.domain.usecases.RateMovieUseCase
 import com.cinema.domain.usecases.UpdateMovieUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.apache.Apache
@@ -37,6 +42,8 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema
 import java.time.Duration
+import com.cinema.domain.ports.inbound.IUpdateMoviePort as IUpdateMovieInboundPort
+import com.cinema.domain.ports.outbound.IUpdateMoviePort as IUpdateMovieOutboundPort
 
 internal const val IMDB_HTTP_CLIENT = "imbdClient_http_client"
 internal const val IMDB_KEY_ENV = "imdbKey"
@@ -56,16 +63,19 @@ object ModuleLoader {
             )
         }
         single { MovieDetailsRepository(get()) } bind IMovieDetailsRepository::class
-        single { MovieDetailsGateway(get(), get()) } bind IGetMovieDetailsPort::class
-        single { GetMovieDetailsByIDUseCase(get()) } bind IGetMovieDetailsByIDPort::class
-
         single { MovieRepository(get()) } bind IMovieRepository::class
+        single { RatingRepository(get()) } bind IRatingRepository::class
+
+        single { MovieDetailsGateway(get(), get()) } bind IGetMovieDetailsPort::class
         single { MovieGateway(get()) } binds arrayOf(IGetMoviePort::class, IUpdateMovieOutboundPort::class)
+        single { MovieRatingGateway(get()) } bind IAddMovieRatingPort::class
+
+        single { GetMovieDetailsByIDUseCase(get()) } bind IGetMovieDetailsByIDPort::class
         single { GetMovieByIdUseCase(get()) } bind IGetMovieByIDPort::class
-
         single { UpdateMovieUseCase(get()) } bind IUpdateMovieInboundPort::class
+        single { RateMovieUseCase(get()) } bind IRateMoviePort::class
 
-        single { MovieHandler(get(), get(), get()) }
+        single { MovieHandler(get(), get(), get(), get()) }
     }
 
     fun Module.injectDatabase() {
@@ -74,13 +84,16 @@ object ModuleLoader {
         single { DBClient(dynamoClient, tables) }
     }
 
-    private fun getTables(dynamoClient: DynamoDbEnhancedAsyncClient) =
-        mapOf(
-            MovieStorage.tableName() to dynamoClient.table(
-                MovieStorage.tableName(),
-                TableSchema.fromClass(MovieStorage::class.java)
-            )
+    private fun getTables(dynamoClient: DynamoDbEnhancedAsyncClient) = mapOf(
+        MovieStorage.entityName() to dynamoClient.table(
+            MovieStorage.tableName(),
+            TableSchema.fromClass(MovieStorage::class.java)
+        ),
+        RatingStorage.entityName() to dynamoClient.table(
+            RatingStorage.tableName(),
+            TableSchema.fromClass(RatingStorage::class.java)
         )
+    )
 }
 
 fun getDbConfig(): DBConfig {
