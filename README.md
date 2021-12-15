@@ -83,7 +83,7 @@ curl --location --request POST 'http://localhost:8080/v1/cinema/movies' \
     }'
 ```
 
-##Documentation
+## Documentation
 
 The application must be running to use this doc
 
