@@ -33,6 +33,7 @@ dependencies {
     implementation("org.koin:koin-logger-slf4j:$koinVersion")
     implementation("org.koin:koin-ktor:$koinVersion")
     implementation("io.ktor:ktor-jackson:$ktorVersion")
+    implementation("io.ktor:ktor-auth:$ktorVersion")
 
     implementation("org.codehaus.janino:janino:$janinoVersion")
 

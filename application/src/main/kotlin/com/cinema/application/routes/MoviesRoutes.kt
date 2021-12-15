@@ -2,6 +2,7 @@ package com.cinema.application.routes
 
 import com.cinema.adapters.inbound.handlers.MovieHandler
 import io.ktor.application.call
+import io.ktor.auth.authenticate
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.Routing
@@ -25,14 +26,15 @@ fun Routing.moviesRoutes() {
         call.respond(movieHandler.getMovie(call.parameters.map()))
     }
 
-    // TODO: check token
     post("/v1/cinema/movies/{movieID}/rate") {
         call.respond(movieHandler.rateMovie(call.receive(), call.parameters.map()))
     }
 
-    // TODO: check token
-    post("/v1/cinema/movies") {
-        call.respond(movieHandler.updateMovie(call.receive()))
+    // This is just a basic example of authorization in a real impl. an auth service; jwt or auth0 are recommended
+    authenticate("auth-basic") {
+        post("/v1/cinema/movies") {
+            call.respond(movieHandler.updateMovie(call.receive()))
+        }
     }
 }
 

@@ -179,6 +179,18 @@
                 },
                 "type": "object"
             }
+        },
+        "parameters": {
+            "Authorization": {
+                "in": "header",
+                "description": "headers that allows to make the request (validates identity)",
+                "schema": {
+                    "type": "string",
+                    "default": "Basic Y2luZW1hOmNpbmVtYQ=="
+                },
+                "required": true,
+                "name": "Authorization"
+            }
         }
     },
     "security": [
@@ -198,6 +210,11 @@
             "post": {
                 "description": "Updates movie data (e.g. ticket price; schedules)",
                 "tags": ["Cinema"],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -253,6 +270,9 @@
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 }
             }

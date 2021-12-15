@@ -55,6 +55,34 @@ In order to run the project tests you need to execute the following command:
 gradle test
 ```
 
+### Local test consideration:
+
+If locally testing the endpoints there's an especial consideration for the movie update (POST: /v1/cinema/movies).
+The request must include the Header: 
+```
+Authorization: Basic Y2luZW1hOmNpbmVtYQ==
+```
+Credentials: (cinema, cinema)
+
+Curl example:
+```
+curl --location --request POST 'http://localhost:8080/v1/cinema/movies' \
+    --header 'Authorization: Basic Y2luZW1hOmNpbmVtYQ==' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "id": "12345",
+        "title": "My Movie Academia",
+        "imdbId": "tt0232500",
+        "ticketPrice": 150.0,
+        "schedules": [
+        {
+        "dayOfWeek": "MONDAY",
+        "times": ["10:30", "14:15"]
+        }
+        ]
+    }'
+```
+
 ##Documentation
 
 The application must be running to use this doc
